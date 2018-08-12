@@ -1,0 +1,54 @@
+<head>
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+
+        var keyword = "Happy dog";
+
+        getImages(keyword);
+
+
+
+
+        function getImages(keyword){
+        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+        {
+            tags: keyword,
+            tagmode: "any",
+            format: "json"
+
+        },
+        function(data)
+        {
+            // Get a random number
+            var rnd1 = Math.floor(Math.random() * data.items.length);
+            var rnd2 = Math.floor(Math.random() * data.items.length);
+            var rnd3 = Math.floor(Math.random() * data.items.length);
+
+            // Get three image urls
+            var image_src1 = data.items[rnd1]['media']['m'].replace("_m", "_b");
+            var image_src2 = data.items[rnd2]['media']['m'].replace("_m", "_b");
+            var image_src3 = data.items[rnd3]['media']['m'].replace("_m", "_b");
+
+            // Set html body's background image to image_src1
+            $('body').css('background-image', "url('" + image_src1 + "')");
+
+
+            var imageArray = [image_src1, image_src2, image_src3];
+           var formE = document.getElementById('id').value = imageArray;
+        });
+      }
+
+    </script>
+</head>
+<body>
+
+<form name="myform" action="ex1.html" method="GET">
+    <br>
+    <input type="submit" value="Transfer">
+    <input type="hidden" id="id" name="id" value="">
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Homer Interactive Diary</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <style>
+  /*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+
+/* loader */
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 70px;
+  height: 70px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  visibility: hidden;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #fff;
+  border: .05rem solid #fff;
+}
+
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+  height: 100%;
+  background-color: #333;
+}
+
+body {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-pack: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+}
+
+.cover-container {
+  max-width: 42em;
+}
+
+.mic-button {
+  padding: 2rem 4rem;
+  font-size: 5rem;
+}
+
+
+/*
+ * Header
+ */
+.masthead {
+  margin-bottom: 2rem;
+}
+
+.masthead-brand {
+  margin-bottom: 0;
+}
+
+.nav-masthead .nav-link {
+  padding: .25rem 0;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .5);
+  background-color: transparent;
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255, 255, 255, .25);
+}
+
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-masthead .active {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+@media (min-width: 48em) {
+  .masthead-brand {
+    float: left;
+  }
+  .nav-masthead {
+    float: right;
+  }
+}
+
+
+/*
+ * Cover
+ */
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+
+
+/*
+ * Footer
+ */
+.mastfoot {
+  color: rgba(255, 255, 255, .5);
+}
+  </style>
+</head>
+<body class="text-center">
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">Homer Interactive Diary</h3>
+        <!-- <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link active" href="#">Home</a>
+          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="#">Contact</a>
+        </nav> -->
+      </div>
+    </header>
+
+    <main role="main" class="inner cover">
+      <h1 class="cover-heading">Tell me a story! <br>Click the Mic to start.</h1>
+
+      <a href="http://localhost:3000/Diary1" class="btn btn-primary rounded-circle mic-button" role="button"><i class="fas fa-microphone"></i></a>
+      <!--<a href="https://webaudiodemos.appspot.com/AudioRecorder/index.html" class="btn btn-primary rounded-circle mic-button" role="button"><i class="fas fa-microphone"></i></button></a>
+       <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+      <p class="lead">
+        <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+      </p> -->
+    </main>
+    <form>
+      <div class="mt-5">
+        <input type="file" accept="audio/*" capture>
+        <input type="submit" value="Send Request">
+      </div>
+    </form>
+    <div class="mt-5">
+      <a href="http://localhost:3000/Diary2" class="btn btn-primary btn-lg" role="button" value="Done" onclick="this.innerHTML='Processing...';document.getElementById('bloader').visibility='visible'" id="DoneButton">Done</a>
+      <div align="center" class="loader" id="bloader"></div>
+    </div>
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p>App prototype designed by IBM NA Intern Hack 2018 Team of Abdul Ashwood, Bruno Avritzer, "Old Man" Russ Gomez, Harrison Razanajatovo, Christopher Rybicki, Liam Salazar, and Siteng Zhang.</p>
+      </div>
+    </footer>
+  </div>
+  <!-- <script>
+  function setVisibility() {
+    var x = document.getElementById("bloader");
+    if (x.style.visibility === "hidden") {
+        x.style.visibility = "visible";
+      }
+    }
+    var y=document.getElementById("DoneButton");
+    y.innerHTML="Processing...";
+  </script> -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+  <script src="delivery.js"></script>
+
+  <script>
+$(function(){
+  var socket = io.connect('http://localhost:5001');
+
+  socket.on('connect', function(){
+    var delivery = new Delivery(socket);
+
+    delivery.on('delivery.connect',function(delivery){
+      $("input[type=submit]").click(function(evt){
+        var file = $("input[type=file]")[0].files[0];
+        var extraParams = {foo: 'bar'};
+        delivery.send(file, extraParams);
+        evt.preventDefault();
+      });
+    });
+
+    delivery.on('send.success',function(fileUID){
+      console.log("file was successfully sent.");
+    });
+  });
+});
+  </script>
+</body>
+
+</html>

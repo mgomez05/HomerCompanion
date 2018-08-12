@@ -1,0 +1,61 @@
+<head>
+    <title>Populate Image Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+
+        window.onload = function()
+        {
+            var keys = ["dog", "cat"];
+            var keyword = "Happy dog";
+
+            for (var key in keys)
+            {
+                getImages(key); 
+            }
+
+            
+        }
+      
+
+        function getImages(keyword){
+        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+        {
+            tags: keyword,
+            tagmode: "any",
+            format: "json"
+
+        },
+        function(data)
+        {
+            // Get a random number
+            var rnd1 = Math.floor(Math.random() * data.items.length);
+            var rnd2 = Math.floor(Math.random() * data.items.length);
+            var rnd3 = Math.floor(Math.random() * data.items.length);
+
+            // Get three image urls
+            var image_src1 = data.items[rnd1]['media']['m'].replace("_m", "_b");
+            var image_src2 = data.items[rnd2]['media']['m'].replace("_m", "_b");
+            var image_src3 = data.items[rnd3]['media']['m'].replace("_m", "_b");
+
+            var imageString = "<img src=" + "\"" + image_src1 + "\"" + " alt=\"image\"/>";
+            console.log(imageString);
+
+            document.getElementById("ImageDiv").innerHTML += imageString;
+        });
+      }
+
+    </script>
+</head>
+
+<body>
+
+    <h1>Image Div</h1>
+    <div id="ImageDiv">
+
+
+    </div>
+
+</form>
+
+</body>
+</html>

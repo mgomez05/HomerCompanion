@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Homer</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+  <script>
+window.onload = function() {
+
+  var keys = [];
+
+  <% for (var i = 0; i < kwds.length; i++) { %>
+  keys.push("<%= kwds[i] %>");
+  <% } %>
+
+  var pars = [];
+  <% for (var i = 0; i < pars.length; i++) { %>
+  pars.push("<%= pars[i] %>");
+  <% } %>
+
+
+  /*var keys = ['old man', 'hills',
+  'little house',
+  'pidgeon',
+  'Helen',
+  ];
+
+  keys.push();
+  keys.push()*/
+
+  /*var pars = ["once upon a time there was an old man",
+              " who lived near the hills",
+              " in a little house by the woods",
+              " and it was very lonely for him until he met a pigeon",
+              " named Helen "];*/
+  console.log(keys);
+
+  // create initial div elements
+  var firstCarouselItemStringPrefix = "<div class=\"carousel-item active\"><div id=\"carousel-0\"></div><div class=\"carousel-caption d-none d-md-block\">";
+  var firstCarouselItemStringSuffix = "</div></div>";
+  var carouselItemStringPrefix      = "<div class=\"carousel-item\"><div id=\"carousel-";
+  var carouselItemStringMid         = "\"></div><div class=\"carousel-caption d-none d-md-block\">";
+  var carouselItemStringSuffix      = "</div></div>";
+
+  first = true;
+
+
+  for (var i = 0; i < keys.length; i++) {
+      if (first) {
+        document.getElementById("carousel").innerHTML += firstCarouselItemStringPrefix + pars[i] + firstCarouselItemStringSuffix;
+      } else {
+        document.getElementById("carousel").innerHTML += carouselItemStringPrefix + i + carouselItemStringMid + pars[i] + carouselItemStringSuffix;
+        console.log(carouselItemStringPrefix + i + carouselItemStringMid + pars[i] + carouselItemStringSuffix);
+      }
+      getImages(keys[i], i, pars);
+      first = false;
+  }
+}
+
+
+function getImages(keyword, num) {
+  jQuery.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?", {
+      tags: keyword,
+      tagmode: "any",
+      format: "json"
+    }, function(data) {
+      // Get a random number
+      var rnd1 = Math.floor(Math.random() * data.items.length);
+      var rnd2 = Math.floor(Math.random() * data.items.length);
+      var rnd3 = Math.floor(Math.random() * data.items.length);
+
+      // Get three image urls
+      var image_src1 = data.items[rnd1]['media']['m'].replace("_m", "_b");
+      var image_src2 = data.items[rnd2]['media']['m'].replace("_m", "_b");
+      var image_src3 = data.items[rnd3]['media']['m'].replace("_m", "_b");
+
+      var imageString = "<img src=" + "\"" + image_src1 + "\"" + " alt=\"image\" style=\"height:400px\"/>";
+      console.log(imageString);
+
+      document.getElementById("carousel-" + num).innerHTML += imageString;
+  });
+}
+
+  </script>
+  <style>
+  /*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+  height: 100%;
+  background-color: #333;
+}
+
+body {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-pack: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+}
+
+.cover-container {
+  max-width: 42em;
+}
+
+.mic-button {
+  padding: 2rem 4rem;
+  font-size: 5rem;
+}
+
+
+/*
+ * Header
+ */
+.masthead {
+  margin-bottom: 2rem;
+}
+
+.masthead-brand {
+  margin-bottom: 0;
+}
+
+.nav-masthead .nav-link {
+  padding: .25rem 0;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .5);
+  background-color: transparent;
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255, 255, 255, .25);
+}
+
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-masthead .active {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+@media (min-width: 48em) {
+  .masthead-brand {
+    float: left;
+  }
+  .nav-masthead {
+    float: right;
+  }
+}
+
+
+/*
+ * Cover
+ */
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+
+
+/*
+ * Footer
+ */
+.mastfoot {
+  color: rgba(255, 255, 255, .5);
+}
+  </style>
+</head>
+<body class="text-center">
+
+  <div id="ImageDiv">
+  </div>
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">Homer Interactive Diary</h3>
+        <!-- <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link active" href="#">Home</a>
+          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="#">Contact</a>
+        </nav> -->
+      </div>
+    </header>
+
+    <main role="main" class="inner cover">
+      <h2 class="cover-heading mt-5">The Story of <%= nme %></h2>
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner" id="carousel">
+          <!-- <% for (var i = 0; i < pars.length; i++) { %>
+            <% if (i === 0) { %>
+            <div class="carousel-item active">
+              <img src=""/>
+              <div style="width: 600px; height: 400px;background-color: red"><%= kwds[i] %></div>
+              <div class="carousel-caption d-none d-md-block">
+                <%= pars[i] %>
+              </div>
+            </div>
+            <% } else { %>
+            <div class="carousel-item">
+              <div style="width: 600px; height: 400px;background-color: red"><%= kwds[i] %></div>
+              <div class="carousel-caption d-none d-md-block">
+                <%= pars[i] %>
+              </div>
+            </div>
+            <% } %>
+          <% } %> -->
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </main>
+
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p>App prototype designed by IBM NA Intern Hack 2018 Team of Abdul Ashwood, Bruno Avritzer, Mark Gomez, Harrison Razanajatovo, Christopher Rybicki, Liam Salazar, and Siteng Zhang.</p>
+      </div>
+    </footer>
+  </div>
+
+
+
+
+
+  <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+
+</html>
